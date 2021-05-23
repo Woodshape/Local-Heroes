@@ -34,7 +34,7 @@ namespace LH.Actions {
                 timeSinceLastHeal = 0f;
 
                 Health health = GetComponent<Health>();
-                int amount = health.CalculateMaxHealthPercentage(0.1f);
+                int amount = 10;
                 health.HealDamage(amount);
             }
 

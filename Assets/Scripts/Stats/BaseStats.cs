@@ -15,7 +15,11 @@ namespace LH.Stats {
 
         [SerializeField]
         private int[] experienceToLevel;
-        private int currentLevel;
+        private int currentLevel = 0;
+
+        public delegate void LevelGainedDelegate();
+
+        public event LevelGainedDelegate levelUpEvent;
 
         private void Start() {
             Experience experience = GetComponent<Experience>();
@@ -27,12 +31,8 @@ namespace LH.Stats {
             CalculateLevel();
         }
 
-        public int GetHealth() {
-            return progression.GetValueForStat(Stats.Health, baseClass, currentLevel);
-        }
-        
-        public int GetDamage() {
-            return progression.GetValueForStat(Stats.Damage, baseClass, currentLevel);
+        public int GetStat(Stats stat) {
+            return progression.GetValueForStat(stat, baseClass, GetLevel());
         }
 
         public int GetLevel() {
@@ -51,22 +51,28 @@ namespace LH.Stats {
             int experience = GetComponent<Experience>().GetExperience();
             int maxLevel = experienceToLevel.Length;
 
-            for (int level = 0; level <= maxLevel; level++) {
-                int experienceNeeded = experienceToLevel[level];
+            for (int level = 1; level <= maxLevel; level++) {
+                int experienceNeeded = experienceToLevel[level - 1];
                 if (experienceNeeded > experience) {
                     return level;
                 }
             }
 
-            return maxLevel + 1;
+            return maxLevel;
+        }
+
+        public int GetExperienceNeeded() {
+            return experienceToLevel[currentLevel - 1];
         }
 
         public void onExperienceGained() {
             int newLevel = CalculateLevel();
             if (newLevel > currentLevel) {
                 Debug.Log(this.gameObject.name + " leveled up to level " + newLevel);
-
+                
                 currentLevel = newLevel;
+                
+                levelUpEvent?.Invoke();
             }
         }
 

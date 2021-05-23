@@ -177,6 +177,6 @@ public abstract class Entity : GAgent {
             return;
         }
         
-        target.TakeDamage(this.gameObject, Convert.ToInt32(Stats.GetDamage() * Difficulties.GetDifficultyModifier(difficulty)));
+        target.TakeDamage(this.gameObject, Convert.ToInt32(Stats.GetStat(LH.Stats.Stats.Damage) * Difficulties.GetDifficultyModifier(difficulty)));
     }
 }

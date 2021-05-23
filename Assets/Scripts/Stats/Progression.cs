@@ -40,7 +40,7 @@ namespace LH.Stats {
                 return 0;
             }
 
-            return levels[level -1];
+            return levels[level - 1];
         }
         private void BuildLookupTable() {
             if (lookupTable != null) {

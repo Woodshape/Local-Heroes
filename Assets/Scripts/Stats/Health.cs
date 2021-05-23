@@ -9,8 +9,7 @@ namespace LH.Stats {
         public GameObject bloodPrefab;
         public Slider healthSlider;
 
-        private int maxHealth;
-        [SerializeField] int currentHealth;
+        [SerializeField] int currentHealth = 1;
 
         private bool isDead = false;
 
@@ -19,13 +18,14 @@ namespace LH.Stats {
         public event deathDelegate deathEvent;
 
         private void Start() {
-            maxHealth = GetComponent<BaseStats>().GetHealth();
-            currentHealth = maxHealth;
+            currentHealth = GetComponent<BaseStats>().GetStat(Stats.Health);
+
+            GetComponent<BaseStats>().levelUpEvent += onLevelUp;
         }
 
         private void Update() {
             if (healthSlider && !isDead) {
-                healthSlider.value = (float) currentHealth / maxHealth;
+                healthSlider.value = (float) currentHealth / GetComponent<BaseStats>().GetStat(Stats.Health);
             }
         }
 
@@ -46,15 +46,10 @@ namespace LH.Stats {
         public void HealDamage(int amount) {
             int heal = Mathf.Abs(amount);
 
-            currentHealth = Mathf.Min(currentHealth + heal, maxHealth);
+            currentHealth = Mathf.Min(currentHealth + heal, GetComponent<BaseStats>().GetStat(Stats.Health));
 
             Debug.Log($"{this.name} healed for {heal}!");
             EvaluateHealth();
-        }
-
-        public int CalculateMaxHealthPercentage(float percent) {
-            float per = Mathf.Clamp01(percent);
-            return Convert.ToInt32(maxHealth * per);
         }
         
         private void AwardExperience(GameObject instigator) {
@@ -68,8 +63,8 @@ namespace LH.Stats {
         }
 
         private void EvaluateHealth() {
-            float percent = (float) currentHealth / maxHealth;
-            Debug.Log($"Health at {percent}: {currentHealth} / {maxHealth}");
+            float percent = (float) currentHealth / GetComponent<BaseStats>().GetStat(Stats.Health);
+            Debug.Log($"Health at {percent}: {currentHealth} / {GetComponent<BaseStats>().GetStat(Stats.Health)}");
             if (percent <= 0.5f) {
                 GetComponent<Entity>().Beliefs.ModifyState("isHurt", 1);
             }
@@ -101,6 +96,11 @@ namespace LH.Stats {
 
         public bool IsDead() {
             return isDead;
+        }
+
+        private void onLevelUp() {
+            int regen = Convert.ToInt32(GetComponent<BaseStats>().GetStat(Stats.Health) * 0.5f);
+            HealDamage(regen);
         }
     }
 }

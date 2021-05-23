@@ -2515,6 +2515,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2484937828466841316, guid: d36c43225f9391e4c8810c98eb7ef85e, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2484937828466841316, guid: d36c43225f9391e4c8810c98eb7ef85e, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2736153895316443436, guid: d36c43225f9391e4c8810c98eb7ef85e, type: 3}
       propertyPath: m_AnchorMax.x
       value: 0
@@ -2522,26 +2530,6 @@ PrefabInstance:
     - target: {fileID: 2736153895316443436, guid: d36c43225f9391e4c8810c98eb7ef85e, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3589151241274287953, guid: d36c43225f9391e4c8810c98eb7ef85e, type: 3}
-      propertyPath: experienceToLevel.Array.size
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 3589151241274287953, guid: d36c43225f9391e4c8810c98eb7ef85e, type: 3}
-      propertyPath: experienceToLevel.Array.data[1]
-      value: 20
-      objectReference: {fileID: 0}
-    - target: {fileID: 3589151241274287953, guid: d36c43225f9391e4c8810c98eb7ef85e, type: 3}
-      propertyPath: experienceToLevel.Array.data[2]
-      value: 30
-      objectReference: {fileID: 0}
-    - target: {fileID: 3589151241274287953, guid: d36c43225f9391e4c8810c98eb7ef85e, type: 3}
-      propertyPath: experienceToLevel.Array.data[3]
-      value: 40
-      objectReference: {fileID: 0}
-    - target: {fileID: 3589151241274287953, guid: d36c43225f9391e4c8810c98eb7ef85e, type: 3}
-      propertyPath: experienceToLevel.Array.data[4]
-      value: 50
       objectReference: {fileID: 0}
     - target: {fileID: 7880970886039044016, guid: d36c43225f9391e4c8810c98eb7ef85e, type: 3}
       propertyPath: m_RootOrder

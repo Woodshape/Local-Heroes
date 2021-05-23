@@ -3888,7 +3888,7 @@ MonoBehaviour:
   startingLevel: 1
   baseClass: 0
   progression: {fileID: 11400000, guid: aca0c5ee6676e054a814fc6f24767c56, type: 2}
-  experienceToLevel: 0a00000014000000
+  experienceToLevel: 
 --- !u!114 &37952862400701620
 MonoBehaviour:
   m_ObjectHideFlags: 0
