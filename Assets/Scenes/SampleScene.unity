@@ -2255,7 +2255,7 @@ MonoBehaviour:
   cameraTransform: {fileID: 963194228}
   followTransform: {fileID: 0}
   informationDisplay: {fileID: 516422805}
-  speed: 5
+  speed: 10
   zoom: {x: 0, y: -10, z: 10}
 --- !u!1 &1819740203
 GameObject:

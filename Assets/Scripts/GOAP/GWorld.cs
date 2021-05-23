@@ -80,7 +80,7 @@ namespace LH.GOAP {
             }
 
             // Set the time scale in Unity
-            Time.timeScale = 5.0f;
+            Time.timeScale = 2.0f;
         }
         private static ResourceQueue CreateAndAddResource(string type, string state, Resource resource) {
             ResourceQueue queue = new ResourceQueue(type, state, worldStates);

@@ -47,10 +47,7 @@ public abstract class Entity : GAgent, IStatModifier {
         }
 
         type = automatic;
-        
-        //  FIXME
-        difficulty = (Difficulty)Random.Range(0, 6);
-        
+
         entityName = type.ToString() + "_" + Random.Range(0, 1000000);
         this.gameObject.name = entityName;
         

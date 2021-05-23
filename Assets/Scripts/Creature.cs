@@ -16,6 +16,10 @@ public class Creature : Entity
         
         OnSpawn();
         
+        //  FIXME
+        GetComponent<BaseStats>().SetLevel(Random.Range(1, 11));
+        difficulty = (Difficulty)Random.Range(0, 6);
+        
         Goal findCharacterGoal = new Goal("findCharacter", 1, false);
         GoalsDict.Add(findCharacterGoal, 1);
         
@@ -31,7 +35,5 @@ public class Creature : Entity
         
         GWorld.Instance.GetQueue(Resource.CREATURE.ToString()).AddResource(this.gameObject, true);
         GWorld.Instance.GetWorldStates().ModifyState("creatures", 1);
-
-        GetComponent<BaseStats>().SetLevel(Random.Range(1, 11));
     }
 }

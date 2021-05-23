@@ -24,7 +24,7 @@ namespace LH.Stats {
         }
 
         private void Update() {
-            healthTick++;
+            healthTick += Time.deltaTime;
 
             if (healthTick > 10f) {
                 healthTick = 0f;

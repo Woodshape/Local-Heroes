@@ -3315,7 +3315,7 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: 0
   m_Radius: 0.5
-  m_Speed: 3.5
+  m_Speed: 5
   m_Acceleration: 8
   avoidancePriority: 50
   m_AngularSpeed: 120
@@ -3352,6 +3352,7 @@ MonoBehaviour:
   attackSpeed: 1.5
   weaponPrefab: {fileID: 6229728552281591882, guid: 011f2a50131689143881a8ebff38f4e8, type: 3}
   weaponHand: {fileID: 711670934878652976}
+  currentWeapon: {fileID: 0}
 --- !u!114 &8182359805243220079
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3395,7 +3396,7 @@ MonoBehaviour:
   startingLevel: 1
   baseClass: 0
   progression: {fileID: 11400000, guid: aca0c5ee6676e054a814fc6f24767c56, type: 2}
-  experienceToLevel: 0a000000140000001e00000028000000320000006400000096000000c80000002c01000090010000
+  experienceToLevel: 320000006400000096000000c8000000fa0000002c01000090010000f401000058020000bc020000
 --- !u!114 &1318745964712516459
 MonoBehaviour:
   m_ObjectHideFlags: 0
