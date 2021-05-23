@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using DefaultNamespace;
 using LH.GOAP;
+using LH.Stats;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -30,5 +31,7 @@ public class Creature : Entity
         
         GWorld.Instance.GetQueue(Resource.CREATURE.ToString()).AddResource(this.gameObject, true);
         GWorld.Instance.GetWorldStates().ModifyState("creatures", 1);
+
+        GetComponent<BaseStats>().SetLevel(Random.Range(1, 11));
     }
 }

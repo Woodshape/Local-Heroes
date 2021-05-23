@@ -1,12 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace LH.Stats {
 
     [Serializable]
     public class StatDict {
-        public Stats stat;
+        [FormerlySerializedAs("stat")]
+        public Stat stat;
         public float startingValue;
         public float levelModifier;
     }

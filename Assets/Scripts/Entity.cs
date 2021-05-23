@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using DefaultNamespace;
 using LH.Actions;
 using LH.GOAP;
@@ -7,7 +8,7 @@ using UnityEngine;
 using Random = UnityEngine.Random;
 
 [RequireComponent(typeof(Health))]
-public abstract class Entity : GAgent {
+public abstract class Entity : GAgent, IStatModifier {
     private static readonly int Attack = Animator.StringToHash("Attack");
 
     [Header("Basic")]
@@ -177,6 +178,16 @@ public abstract class Entity : GAgent {
             return;
         }
         
-        target.TakeDamage(this.gameObject, Convert.ToInt32(Stats.GetStat(LH.Stats.Stats.Damage) * Difficulties.GetDifficultyModifier(difficulty)));
+        target.TakeDamage(this.gameObject, Convert.ToInt32(Stats.GetStat(LH.Stats.Stat.Damage)));
+    }
+    
+    public IEnumerable<float> GetModifier(Stat stat) {
+        yield return 0f;
+    }
+    
+    public IEnumerable<float> GetMultiplier(Stat stat) {
+        float difficultyModifier = Difficulties.GetDifficultyModifier(difficulty);
+        Debug.Log($"Adding {type} difficulty {difficulty} to multiplier: {difficultyModifier}!");
+        yield return difficultyModifier;
     }
 }

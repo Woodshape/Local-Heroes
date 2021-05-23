@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using DefaultNamespace;
 using LH.GOAP;
+using LH.Stats;
 using UnityEditor;
 using UnityEngine;
 using Random = UnityEngine.Random;
@@ -14,6 +15,8 @@ public class Character : Entity, IHumanoid {
     private GameObject weaponPrefab;
     [SerializeField]
     private Transform weaponHand;
+    [SerializeField]
+    private Weapon currentWeapon;
 
     protected override void Start() {
         base.Start();
@@ -41,7 +44,9 @@ public class Character : Entity, IHumanoid {
         GWorld.Instance.GetWorldStates().ModifyState("characters", 1);
 
         if (weaponPrefab != null) {
-            Instantiate(weaponPrefab, weaponHand);
+            GameObject weapon = Instantiate(weaponPrefab, weaponHand);
+
+            currentWeapon = weapon.GetComponent<Weapon>();
         }
     }
 
@@ -57,5 +62,10 @@ public class Character : Entity, IHumanoid {
     public Transform WeaponHand {
         get => weaponHand;
         set => weaponHand = value;
+    }
+
+    public Weapon CurrentWeapon {
+        get => currentWeapon;
+        set => currentWeapon = value;
     }
 }

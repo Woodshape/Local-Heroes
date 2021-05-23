@@ -1,5 +1,5 @@
 ﻿namespace LH.Stats {
-    public enum Stats {
+    public enum Stat {
         Health,
         Focus,
         Stamina,

@@ -5,7 +5,7 @@ using UnityEngine;
 namespace LH.Stats {
     public class EntityStats : MonoBehaviour {
         public EntityTemplate template;
-        public Dictionary<Stats, BaseStat> stats = new Dictionary<Stats, BaseStat>();
+        public Dictionary<Stat, BaseStat> stats = new Dictionary<Stat, BaseStat>();
 
         private void Start() {
             BaseClass baseClass = template.baseClass;
@@ -15,7 +15,7 @@ namespace LH.Stats {
             }
         }
 
-        public float GetValue(Stats stat) {
+        public float GetValue(Stat stat) {
             if (stats.ContainsKey(stat)) {
                 stats[stat].GetValue();
             }
