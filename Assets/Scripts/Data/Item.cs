@@ -6,7 +6,7 @@ using UnityEngine;
 namespace LH.Data {
     public class Item : ScriptableObject {
         [Serializable]
-        protected class ItemModifier {
+        public class ItemModifier {
             public Stat stat;
             public float value;
         }
@@ -22,26 +22,30 @@ namespace LH.Data {
         public float GetModifier(Stat stat) {
             float value = 0f;
 
-            BuildModifierLookupTable();
+            if (this is IEquippable && ((IEquippable) this).IsEquipped) {
+                BuildModifierLookupTable();
             
-            foreach (KeyValuePair<Stat, float> mod in modifierLookupTable) {
-                if (mod.Key == stat) {
-                    Debug.Log($"Getting item modifier for {stat} on item: {mod.Value}");
-                    value += mod.Value;
+                foreach (KeyValuePair<Stat, float> mod in modifierLookupTable) {
+                    if (mod.Key == stat) {
+                        Debug.Log($"Getting item modifier for {stat} on item {this}: {mod.Value}");
+                        value += mod.Value;
+                    }
                 }
             }
-            
+
             return value;
         }
         
         public float GetMultiplier(Stat stat) {
             float value = 0f;
-            
-            BuildMultiplierLookupTable();
 
-            foreach (KeyValuePair<Stat, float> mult in multiplierLookupTable) {
-                if (mult.Key == stat) {
-                    value += mult.Value;
+            if (this is IEquippable && ((IEquippable) this).IsEquipped) {
+                BuildMultiplierLookupTable();
+
+                foreach (KeyValuePair<Stat, float> mult in multiplierLookupTable) {
+                    if (mult.Key == stat) {
+                        value += mult.Value;
+                    }
                 }
             }
             

@@ -17,11 +17,11 @@ public class Creature : Entity, IStatModifier
         OnSpawn();
         
         //  FIXME
-        int level = Random.Range(1, 11);
-        GetComponent<BaseStats>().SetLevel(level);
+        // int level = Random.Range(1, 11);
+        // GetComponent<BaseStats>().SetLevel(level);
         difficulty = (Difficulty)Random.Range(0, 6);
 
-        Debug.Log($"Creature created of level {level} and difficulty {difficulty}");
+       //  Debug.Log($"Creature created of level {level} and difficulty {difficulty}");
         
         Goal findCharacterGoal = new Goal("findCharacter", 1, false);
         GoalsDict.Add(findCharacterGoal, 1);

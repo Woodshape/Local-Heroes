@@ -10,6 +10,7 @@ using UnityEditor;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
+[RequireComponent(typeof(Inventory))]
 public class Character : Entity, IHumanoid, IStatModifier {
     
     [Header("Humanoid")]
@@ -20,12 +21,14 @@ public class Character : Entity, IHumanoid, IStatModifier {
     [SerializeField]
     private Weapon currentWeapon;
     [SerializeField]
-    private List<Item> equippedItems = new List<Item>();
+    private Inventory inventory;
 
     protected override void Start() {
         base.Start();
 
         Debug.Log("Starting Character");
+
+        inventory = GetComponent<Inventory>();
 
         OnSpawn();
 
@@ -51,7 +54,7 @@ public class Character : Entity, IHumanoid, IStatModifier {
             GameObject weapon = Instantiate(weaponPrefab, weaponHand);
 
             currentWeapon = weapon.GetComponent<WeaponObject>().GetWeapon();
-            equippedItems.Add(currentWeapon);
+            inventory.EquipItem(currentWeapon);
         }
     }
 
@@ -78,7 +81,7 @@ public class Character : Entity, IHumanoid, IStatModifier {
         Debug.Log("Getting modifiers for stat: " + stat);
         
         float mod = 0f;
-        foreach (Item item in equippedItems) {
+        foreach (Item item in inventory.GetEquippedItems()) {
             float itemMod = item.GetModifier(stat);
             if (itemMod != 0) {
                 Debug.Log($"Adding mod on item {item}: {itemMod}");
@@ -100,7 +103,7 @@ public class Character : Entity, IHumanoid, IStatModifier {
         Debug.Log($"Adding {type} difficulty {difficulty} to {stat} multiplier: {difficultyModifier}!");
         multiplier += difficultyModifier;
 
-        foreach (Item item in equippedItems) {
+        foreach (Item item in inventory.GetEquippedItems()) {
             float itemMult = item.GetMultiplier(stat);
             if (itemMult != 0) {
                 Debug.Log($"Adding mult on item {item}: {itemMult}");

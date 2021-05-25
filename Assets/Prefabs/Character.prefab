@@ -3254,6 +3254,7 @@ GameObject:
   - component: {fileID: 4583838746976510487}
   - component: {fileID: 1705106462}
   - component: {fileID: 7002164629379486571}
+  - component: {fileID: 1504608171664434946}
   - component: {fileID: 8182359805243220079}
   - component: {fileID: 4006449601520893558}
   - component: {fileID: 3589151241274287953}
@@ -3262,6 +3263,7 @@ GameObject:
   - component: {fileID: 2120797220}
   - component: {fileID: 1767642985}
   - component: {fileID: 2174605595632592135}
+  - component: {fileID: 1104305732305962459}
   m_Layer: 0
   m_Name: Character
   m_TagString: Character
@@ -3353,8 +3355,22 @@ MonoBehaviour:
   weaponPrefab: {fileID: 6229728552281591882, guid: 011f2a50131689143881a8ebff38f4e8, type: 3}
   weaponHand: {fileID: 711670934878652976}
   currentWeapon: {fileID: 0}
-  equippedItems:
-  - {fileID: 11400000, guid: 1e5159fc36351154db9b2a2bbb9ebf5d, type: 2}
+  inventory: {fileID: 0}
+--- !u!114 &1504608171664434946
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7881807149238628900}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa67254c927c9544993de21801b5b4ab, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _equippedItems: []
+  _consumables:
+  - {fileID: 11400000, guid: 2a7d3a502a623c24783dfa8049db06e1, type: 2}
 --- !u!114 &8182359805243220079
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3476,7 +3492,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   actionName: Rest
-  cost: 1
+  cost: 10
   destinationGO: {fileID: 0}
   destinationTag: 
   duration: 5
@@ -3515,6 +3531,32 @@ MonoBehaviour:
   navMeshAgent: {fileID: 0}
   IsRunning: 0
   attackAnimation: {fileID: 0}
+--- !u!114 &1104305732305962459
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7881807149238628900}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a238aafd095180043b0f0eb7449d9906, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  actionName: Take Health Potion
+  cost: 1
+  destinationGO: {fileID: 0}
+  destinationTag: 
+  duration: 1
+  preConditions:
+  - key: isHurt
+    value: 0
+  afterEffects:
+  - key: stayAlive
+    value: 0
+  navMeshAgent: {fileID: 0}
+  IsRunning: 0
+  potion: 0
 --- !u!1 &7927236269272520591
 GameObject:
   m_ObjectHideFlags: 0

@@ -48,8 +48,8 @@ namespace LH.Stats {
             }
         }
 
-        public void HealDamage(int amount) {
-            int heal = Mathf.Abs(amount);
+        public void HealDamage(float amount) {
+            float heal = Mathf.Abs(amount);
 
             currentHealth = Mathf.Min(currentHealth + heal, GetComponent<BaseStats>().GetStat(Stat.Health));
 
