@@ -11,16 +11,9 @@ namespace LH.Stats {
             public BaseClass baseClass;
             public ProgressionStat[] stats;
         }
-        
-        [Serializable]
-        class ProgressionLevel {
-            public int level;
-            public ProgressionStat stat;
-        }
 
         [Serializable]
         class ProgressionStat {
-            [FormerlySerializedAs("stat")]
             public Stat stat;
             public float[] valueForLevels;
         }
@@ -49,6 +42,8 @@ namespace LH.Stats {
             if (lookupTable != null) {
                 return;
             }
+
+            Debug.Log("Building new lookup table");
 
             lookupTable = new Dictionary<BaseClass, Dictionary<Stat, float[]>>();
 

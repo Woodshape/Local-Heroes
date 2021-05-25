@@ -13,6 +13,7 @@ namespace LH.Stats {
 
         private bool isDead = false;
         private float healthTick;
+        private float updateTick;
 
         public delegate void deathDelegate(Health health);
         public event deathDelegate deathEvent;
@@ -30,10 +31,6 @@ namespace LH.Stats {
                 healthTick = 0f;
                 
                 HealDamage(1);
-            }
-
-            if (healthSlider && !isDead) {
-                healthSlider.value = (float) currentHealth / GetComponent<BaseStats>().GetStat(Stat.Health);
             }
         }
 
@@ -78,6 +75,8 @@ namespace LH.Stats {
             else {
                 GetComponent<Entity>().Beliefs.ModifyState("isHurt", -1);
             }
+
+            UpdateHealthDisplay(percent);
         }
 
         private IEnumerator Die() {
@@ -99,6 +98,12 @@ namespace LH.Stats {
             yield return new WaitForSeconds(.1f);
 
             Destroy(gameObject);
+        }
+
+        private void UpdateHealthDisplay(float percent) {
+            if (healthSlider && !isDead) {
+                healthSlider.value = percent;
+            }
         }
 
         public bool IsDead() {

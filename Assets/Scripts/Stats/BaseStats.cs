@@ -18,6 +18,7 @@ namespace LH.Stats {
         private int currentLevel = 0;
 
         private Dictionary<Stat, IStatModifier> statModifiers;
+        private float updateTick;
 
         public delegate void LevelGainedDelegate();
 
@@ -28,9 +29,15 @@ namespace LH.Stats {
             if (experience) {
                 experience.experienceGainEvent += onExperienceGained;
             }
-
-            currentLevel = startingLevel;
+            
             CalculateLevel();
+        }
+
+        private void Update() {
+            updateTick += Time.deltaTime;
+            if (updateTick > 1f) {
+                
+            }
         }
 
         public float GetStat(Stat stat) {
@@ -38,37 +45,19 @@ namespace LH.Stats {
             float modifiers = GetModifiers(stat);
             float multipliers = GetMultipliers(stat);
 
-            Debug.Log("GET Stat: " + stat);
-            Debug.Log("Base: " + baseValue);
-            Debug.Log("Mod: " + modifiers);
-            Debug.Log("Mult: " + multipliers);
-            Debug.Log("VALUE: " + (baseValue + modifiers) * multipliers);
+            // Debug.Log("GET Stat: " + stat);
+            // Debug.Log("Base: " + baseValue);
+            // Debug.Log("Mod: " + modifiers);
+            // Debug.Log("Mult: " + multipliers);
+            // Debug.Log("VALUE: " + (baseValue + modifiers) * multipliers);
             
             //
             //  Add modifiers to base value FIRST before multiplication
             //  10 + 10 = 20
             //  20 * 1.1 = 22
             //
-            return (baseValue + modifiers) * multipliers;
+            return (baseValue + modifiers) * (1 + multipliers);
         }
-
-        // public void AddStatModifier(Stat stat, IStatModifier modifier) {
-        //     statModifiers.Add(stat, modifier);
-        // }
-        //
-        // public void RemoveStatModifier(Stat stat, IStatModifier modifier) {
-        //     Dictionary<Stat, IStatModifier> temp = new Dictionary<Stat, IStatModifier>();
-        //     
-        //     if (statModifiers.ContainsKey(stat)) {
-        //         foreach (KeyValuePair<Stat, IStatModifier> stats in statModifiers) {
-        //             if (!stats.Value.Equals(modifier)) {
-        //                 temp.Add(stats.Key, stats.Value);
-        //             }
-        //         }
-        //     }
-        //
-        //     statModifiers = temp;
-        // }
 
         public int GetLevel() {
             if (currentLevel < 1) {
@@ -99,7 +88,7 @@ namespace LH.Stats {
 
         public int GetExperienceReward() {
             //  FIXME
-            return Convert.ToInt32(startingLevel * 10 * Difficulties.GetDifficultyModifier(GetComponent<Entity>().difficulty));
+            return Convert.ToInt32(GetLevel() * 10 * (1 + Difficulties.GetDifficultyModifier(GetComponent<Entity>().difficulty)));
         }
         
         private float GetBaseStatValue(Stat stat) {
@@ -132,26 +121,8 @@ namespace LH.Stats {
             //  8 + 2 = 10
             //  -8 + 2 = -6
             // 
-            
-            // foreach (KeyValuePair<Stat, IStatModifier> statModifier in statModifiers) {
-            //     if (statModifier.Key == stat) {
-            //         foreach (float modifier in statModifier.Value.GetModifier(stat)) {
-            //             mod += modifier;
-            //         }
-            //     }
-            // }
-            
-            
             foreach (IStatModifier modifierInterface in GetComponents<IStatModifier>()) {
                 foreach (float modifier in modifierInterface.GetModifier(stat)) {
-                    Debug.Log("mod -> " + modifier);
-                    mod += modifier;
-                }
-            }
-            
-            foreach (IStatModifier modifierInterface in GetComponentsInChildren<IStatModifier>()) {
-                foreach (float modifier in modifierInterface.GetModifier(stat)) {
-                    Debug.Log("mod -> " + modifier);
                     mod += modifier;
                 }
             }
@@ -168,25 +139,13 @@ namespace LH.Stats {
             //  OR 0.08 + 0.02 = 0.01
             //  NOT: 0.08 * 0.02 = 0,0016
             // 
-            int count = 0;
             foreach (IStatModifier multiplierInterface in GetComponents<IStatModifier>()) {
                 foreach (float multiplier in multiplierInterface.GetMultiplier(stat)) {
-                    count++;
-                    
-                    Debug.Log("mult -> " + multiplier);
-                    mod += multiplier;
-                }
-            }
-            foreach (IStatModifier multiplierInterface in GetComponentsInChildren<IStatModifier>()) {
-                foreach (float multiplier in multiplierInterface.GetMultiplier(stat)) {
-                    count++;
-                    
-                    Debug.Log("mult -> " + multiplier);
                     mod += multiplier;
                 }
             }
 
-            return count > 0 ? mod : 1f;
+            return mod;
         }
     }
 }

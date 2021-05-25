@@ -11,9 +11,9 @@ namespace LH.Actions {
         }
         
         public override bool PrePerform() {
-            destinationGO = GWorld.Instance.GetQueue(Resource.CREATURE.ToString()).GetNextResource();
+            destinationGO = GWorld.Instance.GetQueue(Resource.Creature.ToString()).GetNextResource();
             if (destinationGO == null) {
-                Debug.Log("No target found for of type: " + Resource.CREATURE);
+                Debug.Log("No target found for of type: " + Resource.Creature);
                 return false;
             }
 

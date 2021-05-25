@@ -23,7 +23,7 @@ namespace LH.Actions {
         public override bool PrePerform() {
             GameObject closest = null;
             float closestDist = float.MaxValue;
-            foreach (GameObject character in GWorld.Instance.GetQueue(Resource.CHARACTER.ToString()).queue) {
+            foreach (GameObject character in GWorld.Instance.GetQueue(Resource.Character.ToString()).queue) {
                 float dist = Vector3.Distance(character.transform.position, this.transform.position);
                 if (dist < range) {
                     if (dist < closestDist) {

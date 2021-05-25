@@ -56,7 +56,7 @@ namespace LH.GOAP {
 
         // Start is called before the first frame update
         protected virtual void Start() {
-            Debug.Log("Starting GAgent");
+            // Debug.Log("Starting GAgent");
 
             _camera = Camera.main;
 
@@ -67,7 +67,7 @@ namespace LH.GOAP {
 
         public void StopCurrentAction() {
             if (CurrentAction != null && CurrentAction.IsRunning) {
-                Debug.Log("Stopping current action");
+                // Debug.Log("Stopping current action");
                 CurrentAction.IsRunning = false;
             }
         }
@@ -80,14 +80,14 @@ namespace LH.GOAP {
         //an invoked method to allow an agent to be performing a task
         //for a set location
         void CompleteAction() {
-            Debug.Log("COMPLETING action: " + CurrentAction.actionName);
+            // Debug.Log("COMPLETING action: " + CurrentAction.actionName);
 
             CurrentAction.IsRunning = false;
             CurrentAction.PostPerform();
             invoked = false;
             started = false;
 
-            Debug.Log("Action completed: " + CurrentAction.actionName);
+            // Debug.Log("Action completed: " + CurrentAction.actionName);
         }
 
         bool started = false;
@@ -195,7 +195,7 @@ namespace LH.GOAP {
                 }
 
                 if (CurrentAction.PrePerform()) {
-                    Debug.Log("STARTING action: " + CurrentAction.actionName);
+                    // Debug.Log("STARTING action: " + CurrentAction.actionName);
 
                     // Get our current object
                     if (CurrentAction.destinationGO == null && CurrentAction.destinationTag != "") {

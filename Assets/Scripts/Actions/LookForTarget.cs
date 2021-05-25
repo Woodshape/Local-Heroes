@@ -43,8 +43,7 @@ namespace LH.Actions {
                 return true;
             }
             
-
-            Debug.Log("No target within aggro range");
+            //Debug.Log("No target within aggro range");
             agentBeliefs.ModifyState("noTargetInSight", 1);
             
             return false;
