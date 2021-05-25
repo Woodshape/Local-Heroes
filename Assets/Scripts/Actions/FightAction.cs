@@ -37,9 +37,6 @@ namespace LH.Actions {
 
             Entity targetEntity = destinationGO.GetComponent<Entity>();
 
-            //  subscribe to target death event
-            // targetEntity.entityDeathEvent += onEntityDeath;
-
             targetEntity.Beliefs.ModifyState("isAttacked", 1);
 
             duration = entity.attackSpeed;

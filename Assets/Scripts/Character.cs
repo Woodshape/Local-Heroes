@@ -76,7 +76,7 @@ public class Character : Entity, IHumanoid, IStatModifier {
         get => currentWeapon;
         set => currentWeapon = value;
     }
-    
+
     public IEnumerable<float> GetModifier(Stat stat) {
         Debug.Log("Getting modifiers for stat: " + stat);
         

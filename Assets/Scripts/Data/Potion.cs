@@ -25,7 +25,7 @@ namespace LH.Data {
                 case PotionType.Health:
                     Debug.Log("Potion: Health");
                     
-                    consumer.GetComponent<Health>().HealDamage(healAmount);
+                    consumer.GetComponent<Health>().HealDamage(healAmount, true);
                     success = true;
                     break;
                 case PotionType.Buff:

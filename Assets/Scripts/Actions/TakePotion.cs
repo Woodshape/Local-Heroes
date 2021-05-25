@@ -18,17 +18,14 @@ public class TakePotion : GAction {
 
     public override void Perform() {
     }
+    
     public override bool PrePerform() {
         destinationGO = this.gameObject;
         return true;
     }
+    
     public override bool PostPerform() {
-        switch (potion) {
-            case PotionType.Health:
-                GetComponent<Inventory>().TakeHealthPotion(GetComponent<Entity>());
-                return true;
-        }
-        
-        return false;
+        GetComponent<Inventory>().TakePotion(potion, GetComponent<Entity>());
+        return true;
     }
 }

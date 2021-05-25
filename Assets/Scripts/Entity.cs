@@ -69,14 +69,17 @@ public abstract class Entity : GAgent {
     public void FightWith(GameObject target) {
         FightAction[] actions = gameObject.GetComponents<FightAction>();
         if (actions == null || actions.Length == 0) {
+            //  no fight actions found...
             Beliefs.RemoveState("isFighting");
             return;
         }
 
+        //  we already have a target, so we better unsubscribe to its death event
         if (this.target != null) {
             this.target.deathEvent -= onTargetDeath;
         }
 
+        //  set a new target
         this.target = target.GetComponent<Health>();
 
         //  subscribe to target's death event

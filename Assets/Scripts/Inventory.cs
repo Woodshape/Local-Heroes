@@ -15,6 +15,10 @@ public class Inventory : MonoBehaviour {
     public void EquipItem(IEquippable item) {
         item.EquipItem();
 
+        if (item is Weapon weapon) {
+            weapon.OverrideAnimation(GetComponent<Entity>().animator);
+        }
+
         try {
             Item i = (Item) item;
             _equippedItems.Add(i);
@@ -25,15 +29,17 @@ public class Inventory : MonoBehaviour {
         }
     }
 
-    public void TakeHealthPotion(Entity entity) {
-        Debug.Log("Taking health potion...");
+    public void TakePotion(PotionType type, Entity entity) {
+        Debug.Log("Taking potion of type: " + type);
         int index = -1;
         foreach (Item item in _consumables) {
             if (item is Potion potion) {
-                index++;
+                if (potion.type == type) {
+                    index++;
+                }
             }
         }
-
+        
         if (index != -1) {
             ConsumeItem(entity, (Potion)_consumables.ElementAt(index));
         }

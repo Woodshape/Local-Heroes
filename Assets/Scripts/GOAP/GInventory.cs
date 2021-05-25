@@ -10,7 +10,7 @@ namespace LH.GOAP
 
         // Method to add items to our list
         public void AddItem(GameObject i) {
-            Debug.Log("Adding item to inventory: " + i.name);
+            Debug.Log("Adding item to GOAP inventory: " + i.name);
             items.Add(i);
         }
 
@@ -46,7 +46,7 @@ namespace LH.GOAP
             }
             // Do we have something to remove?
             if (indexToRemove != -1) {
-                Debug.Log("Removing item from inventory: " + i.name);
+                Debug.Log("Removing item from GOAP inventory: " + i.name);
                 // Yes we do.  So remove the item at indexToRemove
                 items.RemoveAt(indexToRemove);
             }

@@ -1,5 +1,7 @@
 using System;
 using System.Collections;
+using LH.Actions;
+using LH.GOAP;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -7,6 +9,7 @@ namespace LH.Stats {
     [RequireComponent(typeof(BaseStats))]
     public class Health : MonoBehaviour {
         public GameObject bloodPrefab;
+        public GameObject healPrefab;
         public Slider healthSlider;
 
         [SerializeField] float currentHealth = 1;
@@ -30,7 +33,7 @@ namespace LH.Stats {
             if (healthTick > 10f) {
                 healthTick = 0f;
                 
-                HealDamage(1);
+                HealDamage(1, false);
             }
         }
 
@@ -45,13 +48,23 @@ namespace LH.Stats {
             if (currentHealth == 0) {
                 StartCoroutine(Die());
                 AwardExperience(instigator);
+                return;
+            }
+            
+            //  interrupt current action if we were not wandering around
+            if ((GetComponent<GAgent>().CurrentAction is WanderAction)) {
+                GetComponent<GAgent>().CurrentAction.IsRunning = false;
             }
         }
 
-        public void HealDamage(float amount) {
+        public void HealDamage(float amount, bool showEffect) {
             float heal = Mathf.Abs(amount);
 
             currentHealth = Mathf.Min(currentHealth + heal, GetComponent<BaseStats>().GetStat(Stat.Health));
+
+            if (showEffect && healPrefab != null) {
+                Instantiate(healPrefab, gameObject.transform);
+            }
 
             Debug.Log($"{this.name} healed for {heal}!");
             EvaluateHealth();
@@ -112,7 +125,7 @@ namespace LH.Stats {
 
         private void onLevelUp() {
             int regen = Convert.ToInt32(GetComponent<BaseStats>().GetStat(Stat.Health) * 0.5f);
-            HealDamage(regen);
+            HealDamage(regen, true);
         }
     }
 }

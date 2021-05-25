@@ -35,7 +35,7 @@ namespace LH.Actions {
 
                 Health health = GetComponent<Health>();
                 int amount = 10;
-                health.HealDamage(amount);
+                health.HealDamage(amount, true);
             }
 
             if (!campfireSpawned) {
