@@ -7,7 +7,7 @@ using LH.Stats;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
-public class Creature : Entity
+public class Creature : Entity, IStatModifier
 {
     protected override void Start() {
         base.Start();
@@ -17,8 +17,11 @@ public class Creature : Entity
         OnSpawn();
         
         //  FIXME
-        GetComponent<BaseStats>().SetLevel(Random.Range(1, 11));
+        int level = Random.Range(1, 11);
+        GetComponent<BaseStats>().SetLevel(level);
         difficulty = (Difficulty)Random.Range(0, 6);
+
+        Debug.Log($"Creature created of level {level} and difficulty {difficulty}");
         
         Goal findCharacterGoal = new Goal("findCharacter", 1, false);
         GoalsDict.Add(findCharacterGoal, 1);
@@ -33,7 +36,17 @@ public class Creature : Entity
     public override void OnSpawn() {
         Debug.Log(gameObject.name + " spawned!");
         
-        GWorld.Instance.GetQueue(Resource.CREATURE.ToString()).AddResource(this.gameObject, true);
+        GWorld.Instance.GetQueue(Resource.Creature.ToString()).AddResource(this.gameObject, true);
         GWorld.Instance.GetWorldStates().ModifyState("creatures", 1);
+    }
+    
+    public IEnumerable<float> GetModifier(Stat stat) {
+        yield return 0f;
+    }
+    
+    public IEnumerable<float> GetMultiplier(Stat stat) {
+        float difficultyModifier = Difficulties.GetDifficultyModifier(difficulty);
+        Debug.Log($"Adding {type} difficulty {difficulty} to {stat} multiplier: {difficultyModifier}!");
+        yield return difficultyModifier;
     }
 }

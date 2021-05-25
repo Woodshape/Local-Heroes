@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using LH.Data;
+using UnityEngine;
 
 namespace DefaultNamespace {
     public interface IHumanoid {

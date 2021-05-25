@@ -69,10 +69,10 @@ namespace LH.GOAP {
             worldStates = new GStates();
             
             // Create character array and add to the resources Dictionary
-            characters = CreateAndAddResource("", "characters", Resource.CHARACTER);
+            characters = CreateAndAddResource("", "characters", Resource.Character);
 
             // Create creature array and add to the resources Dictionary
-            creatures = CreateAndAddResource("", "creatures", Resource.CREATURE);
+            creatures = CreateAndAddResource("", "creatures", Resource.Creature);
 
             Debug.Log("Added resources to world: ");
             foreach (KeyValuePair<string, ResourceQueue> resource in resourcesDict) {

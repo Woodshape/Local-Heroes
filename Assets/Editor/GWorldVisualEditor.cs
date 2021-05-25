@@ -34,7 +34,9 @@ namespace LH.Editor {
                 GUILayout.Label("---: ");
                 GUILayout.Label("C: " + resource.Value.queue.Count);
                 foreach (GameObject res in resource.Value.queue) {
-                    GUILayout.Label("=====  " + resource.Key + " " + res.name);
+                    if (res != null) {
+                        GUILayout.Label("=====  " + resource.Key + " " + res.name);
+                    }
                 }
             }
 

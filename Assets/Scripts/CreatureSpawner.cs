@@ -1,5 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
+using DefaultNamespace;
+using LH.GOAP;
 using UnityEngine;
 using UnityEngine.Serialization;
 
@@ -9,6 +11,7 @@ public class CreatureSpawner : MonoBehaviour
     public GameObject creaturePrefab;
     // Number of creatures to spawn
     public float spawnTime = 10f;
+    public int maxSpawn = 100;
     
     // Start is called before the first frame update
     void Start() {
@@ -17,7 +20,13 @@ public class CreatureSpawner : MonoBehaviour
     }
     
     private void SpawnCreature() {
-        Instantiate(creaturePrefab, this.transform.position, Quaternion.identity);
+        //  only ever spawn a maximum of 10 entities per type
+        if (GWorld.Instance.GetQueue(creaturePrefab.GetComponent<Entity>().type.ToString()).queue.Count < maxSpawn) {
+            Instantiate(creaturePrefab, this.transform.position, Quaternion.identity);
+
+            Resource resource = creaturePrefab.GetComponent<Entity>().type;
+            Debug.Log($"{resource} level: " + GameWorld.Instance.CalculateAverageLevel(resource)); 
+        }
         
         // Call the SpawnPatient repeatedly
         Invoke(nameof(SpawnCreature), spawnTime);

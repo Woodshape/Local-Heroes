@@ -3344,7 +3344,7 @@ MonoBehaviour:
   actionText: {fileID: 7555749773758441454}
   entityName: 
   type: 0
-  difficulty: 5
+  difficulty: 2
   animator: {fileID: 0}
   target: {fileID: 0}
   Stats: {fileID: 0}
@@ -3353,6 +3353,8 @@ MonoBehaviour:
   weaponPrefab: {fileID: 6229728552281591882, guid: 011f2a50131689143881a8ebff38f4e8, type: 3}
   weaponHand: {fileID: 711670934878652976}
   currentWeapon: {fileID: 0}
+  equippedItems:
+  - {fileID: 11400000, guid: 1e5159fc36351154db9b2a2bbb9ebf5d, type: 2}
 --- !u!114 &8182359805243220079
 MonoBehaviour:
   m_ObjectHideFlags: 0

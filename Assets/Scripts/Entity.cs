@@ -8,7 +8,7 @@ using UnityEngine;
 using Random = UnityEngine.Random;
 
 [RequireComponent(typeof(Health))]
-public abstract class Entity : GAgent, IStatModifier {
+public abstract class Entity : GAgent {
     private static readonly int Attack = Animator.StringToHash("Attack");
 
     [Header("Basic")]
@@ -35,11 +35,17 @@ public abstract class Entity : GAgent, IStatModifier {
         base.Start();
         
         Debug.Log("Starting Entity");
+        
+        Goal aliveGoal = new Goal("stayAlive", 5, false);
+        GoalsDict.Add(aliveGoal, 10);
 
         animator = GetComponent<Animator>();
 
         Stats = GetComponent<BaseStats>();
         
+        entityName = type.ToString() + "_" + Random.Range(0, 1000000);
+        this.gameObject.name = entityName;
+
         bool resource = Enum.TryParse(gameObject.tag, true, out Resource automatic);
         if (!resource) {
             Debug.LogError("Could not parse resource for tag: " + gameObject.tag);
@@ -47,12 +53,6 @@ public abstract class Entity : GAgent, IStatModifier {
         }
 
         type = automatic;
-
-        entityName = type.ToString() + "_" + Random.Range(0, 1000000);
-        this.gameObject.name = entityName;
-        
-        Goal aliveGoal = new Goal("stayAlive", 5, false);
-        GoalsDict.Add(aliveGoal, 10);
     }
 
     private void Update() {
@@ -103,10 +103,10 @@ public abstract class Entity : GAgent, IStatModifier {
         }
 
         switch (type) {
-            case Resource.CHARACTER:
+            case Resource.Character:
                 GWorld.Instance.GetWorldStates().ModifyState("characters", -1);
                 break;
-            case Resource.CREATURE:
+            case Resource.Creature:
                 GWorld.Instance.GetWorldStates().ModifyState("creatures", -1);
                 break;
         }
@@ -176,15 +176,5 @@ public abstract class Entity : GAgent, IStatModifier {
         }
         
         target.TakeDamage(this.gameObject, Convert.ToInt32(Stats.GetStat(LH.Stats.Stat.Damage)));
-    }
-    
-    public IEnumerable<float> GetModifier(Stat stat) {
-        yield return 0f;
-    }
-    
-    public IEnumerable<float> GetMultiplier(Stat stat) {
-        float difficultyModifier = Difficulties.GetDifficultyModifier(difficulty);
-        Debug.Log($"Adding {type} difficulty {difficulty} to multiplier: {difficultyModifier}!");
-        yield return difficultyModifier;
     }
 }

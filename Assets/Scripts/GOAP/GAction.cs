@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using UnityEditor.Compilation;
+﻿using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
-using UnityEngine.Serialization;
 
 namespace LH.GOAP
 {
