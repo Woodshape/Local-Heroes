@@ -24,11 +24,11 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1360269338}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: -0.5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 7880970886039044016}
+  m_Father: {fileID: 2316768789192138782}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1360269340
@@ -43,7 +43,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 109dd18e418d4a342af44c4508b14997, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damageTextPrefab: {fileID: 4863250336281720856, guid: d39aab5af356de348a1d5607cc59e070, type: 3}
+  Health: {fileID: 8182359805243220079}
+  damageTextPrefab: {fileID: 8530606161350888416, guid: d39aab5af356de348a1d5607cc59e070, type: 3}
 --- !u!1 &45154718125648058
 GameObject:
   m_ObjectHideFlags: 0
@@ -2436,6 +2437,7 @@ RectTransform:
   - {fileID: 1051210428710126697}
   - {fileID: 4751687284877116183}
   - {fileID: 1169723407946550466}
+  - {fileID: 1360269339}
   m_Father: {fileID: 7880970886039044016}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -3329,7 +3331,6 @@ Transform:
   - {fileID: 5200691168151869274}
   - {fileID: 711670934878652976}
   - {fileID: 2316768789192138782}
-  - {fileID: 1360269339}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -3497,6 +3498,7 @@ MonoBehaviour:
     value: 0
   navMeshAgent: {fileID: 0}
   IsRunning: 0
+  IsInterruptable: 0
   range: 50
   resource: 1
 --- !u!114 &2120797220
@@ -3524,6 +3526,7 @@ MonoBehaviour:
     value: 0
   navMeshAgent: {fileID: 0}
   IsRunning: 0
+  IsInterruptable: 1
   campfireGO: {fileID: 1661447213762934, guid: 2fe7a9ef6e9f71845a2043158d302b34, type: 3}
 --- !u!114 &1767642985
 MonoBehaviour:
@@ -3550,6 +3553,7 @@ MonoBehaviour:
     value: 0
   navMeshAgent: {fileID: 0}
   IsRunning: 0
+  IsInterruptable: 1
   campfireGO: {fileID: 1661447213762934, guid: 2fe7a9ef6e9f71845a2043158d302b34, type: 3}
 --- !u!114 &2174605595632592135
 MonoBehaviour:
@@ -3576,6 +3580,7 @@ MonoBehaviour:
     value: 0
   navMeshAgent: {fileID: 0}
   IsRunning: 0
+  IsInterruptable: 0
   attackAnimation: {fileID: 0}
 --- !u!114 &1104305732305962459
 MonoBehaviour:
@@ -3602,6 +3607,7 @@ MonoBehaviour:
     value: 0
   navMeshAgent: {fileID: 0}
   IsRunning: 0
+  IsInterruptable: 0
   potion: 0
 --- !u!1 &7927236269272520591
 GameObject:

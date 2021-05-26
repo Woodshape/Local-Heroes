@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.Serialization;
 
 namespace LH.GOAP
 {
@@ -32,8 +33,11 @@ namespace LH.GOAP
         // Access our inventory
         public GInventory agentInventory;
         
-        // Are we currently performing an action?
+        //  Are we currently performing an action?
         public bool IsRunning = false;
+        
+        //  Can this action be interrupted (e.g. by being hit in combat)
+        public bool IsInterruptable = false;
 
         // Constructor
         protected GAction()

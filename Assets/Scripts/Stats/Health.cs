@@ -17,9 +17,10 @@ namespace LH.Stats {
         private bool isDead = false;
         private float healthTick;
         private float updateTick;
+        
+        public event Action<Health> deathEvent;
 
-        public delegate void deathDelegate(Health health);
-        public event deathDelegate deathEvent;
+        public event Action<float> damageEvent;
 
         private void Start() {
             currentHealth = GetComponent<BaseStats>().GetStat(Stat.Health);
@@ -37,8 +38,10 @@ namespace LH.Stats {
             }
         }
 
-        public void TakeDamage(GameObject instigator, int amount) {
-            int damage = Mathf.Abs(amount);
+        public void TakeDamage(GameObject instigator, float amount) {
+            float damage = Mathf.Abs(amount);
+            
+            damageEvent?.Invoke(damage);
 
             currentHealth = Mathf.Max(currentHealth - damage, 0);
 
@@ -52,7 +55,7 @@ namespace LH.Stats {
             }
             
             //  interrupt current action if we were not wandering around
-            if ((GetComponent<GAgent>().CurrentAction is WanderAction)) {
+            if ((GetComponent<GAgent>().CurrentAction.IsInterruptable)) {
                 GetComponent<GAgent>().CurrentAction.IsRunning = false;
             }
         }

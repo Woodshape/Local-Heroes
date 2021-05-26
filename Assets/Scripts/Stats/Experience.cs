@@ -9,9 +9,7 @@ namespace LH.Stats {
         
         private int experience;
 
-        public delegate void ExperienceGainedDelegate();
-
-        public event ExperienceGainedDelegate experienceGainEvent;
+        public event Action experienceGainEvent;
 
         private void Update() {
             if (experienceSlider == null) {

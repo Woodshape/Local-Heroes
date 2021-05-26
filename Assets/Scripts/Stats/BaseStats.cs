@@ -20,9 +20,7 @@ namespace LH.Stats {
         private Dictionary<Stat, IStatModifier> statModifiers;
         private float updateTick;
 
-        public delegate void LevelGainedDelegate();
-
-        public event LevelGainedDelegate levelUpEvent;
+        public event Action levelUpEvent;
 
         private void Start() {
             Experience experience = GetComponent<Experience>();
