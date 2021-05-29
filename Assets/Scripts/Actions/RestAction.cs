@@ -29,6 +29,7 @@ namespace LH.Actions {
                 IsRunning = false;
             }
         }
+        
         public override void Perform() {
             if (timeSinceLastHeal > 1f) {
                 timeSinceLastHeal = 0f;
@@ -40,8 +41,6 @@ namespace LH.Actions {
 
             if (!campfireSpawned) {
                 campfireSpawned = true;
-
-                Debug.Log("Spawning campfire...");
 
                 Instantiate(campfireGO, campfirePlace.transform.position, Quaternion.identity);
 
@@ -56,11 +55,12 @@ namespace LH.Actions {
 
             campfireSpawned = false;
 
-            Vector3 pos = new Vector3(transform.position.x + Random.Range(-10f, 10f), 0,
-                transform.position.z + Random.Range(-10f, 10f));
+            Vector3 currentPosition = transform.position;
+            Vector3 placementPosition = new Vector3(currentPosition.x + Random.Range(-10f, 10f), 0,
+                currentPosition.z + Random.Range(-10f, 10f));
 
             campfirePlace = new GameObject("Campfire Position " + GetComponent<Entity>().entityName);
-            campfirePlace.transform.position = pos;
+            campfirePlace.transform.position = placementPosition;
 
             NavMeshPath path = new NavMeshPath();
             if (navMeshAgent.CalculatePath(campfirePlace.transform.position, path)) {

@@ -22,6 +22,8 @@ namespace LH.Stats {
 
         public event Action<float> damageEvent;
 
+        public event Action healthChangedEvent;
+
         private void Start() {
             currentHealth = GetComponent<BaseStats>().GetStat(Stat.Health);
 
@@ -33,7 +35,7 @@ namespace LH.Stats {
 
             if (healthTick > 10f) {
                 healthTick = 0f;
-                
+
                 HealDamage(1, false);
             }
         }
@@ -73,6 +75,14 @@ namespace LH.Stats {
             EvaluateHealth();
         }
         
+        public bool IsDead() {
+            return isDead;
+        }
+
+        public float GetCurrentHealth() {
+            return currentHealth;
+        }
+        
         private void AwardExperience(GameObject instigator) {
             //  get our experience worth
             int amount = GetComponent<BaseStats>().GetExperienceReward();
@@ -84,7 +94,7 @@ namespace LH.Stats {
         }
 
         private void EvaluateHealth() {
-            float percent = (float) currentHealth / GetComponent<BaseStats>().GetStat(Stat.Health);
+            float percent = currentHealth / GetComponent<BaseStats>().GetStat(Stat.Health);
             if (percent <= 0.5f) {
                 GetComponent<Entity>().Beliefs.ModifyState("isHurt", 1);
             }
@@ -92,7 +102,10 @@ namespace LH.Stats {
                 GetComponent<Entity>().Beliefs.ModifyState("isHurt", -1);
             }
 
-            UpdateHealthDisplay(percent);
+            if (percent < 1.0f) {
+                UpdateHealthDisplay(percent);
+                healthChangedEvent?.Invoke();
+            }
         }
 
         private IEnumerator Die() {
@@ -120,10 +133,6 @@ namespace LH.Stats {
             if (healthSlider && !isDead) {
                 healthSlider.value = percent;
             }
-        }
-
-        public bool IsDead() {
-            return isDead;
         }
 
         private void onLevelUp() {

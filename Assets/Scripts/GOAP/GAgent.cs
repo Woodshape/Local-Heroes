@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using TMPro;
@@ -50,14 +51,13 @@ namespace LH.GOAP {
         private GameObject _destTarget;
 
         [SerializeField] private Canvas _canvas;
-        [SerializeField] private TextMeshPro actionText;
 
         private Camera _camera;
 
+        public event Action actionChangeEvent;
+
         // Start is called before the first frame update
         protected virtual void Start() {
-            // Debug.Log("Starting GAgent");
-
             _camera = Camera.main;
 
             GAction[] acts = this.GetComponents<GAction>();
@@ -92,12 +92,9 @@ namespace LH.GOAP {
 
         bool started = false;
         void LateUpdate() {
-            string actionTextBuild = "";
-
-            //  action text should face camera
+            //  in-world canvas text should face camera
             if (_canvas) {
                 Quaternion rotation = _camera.transform.rotation;
-                //actionText.transform.LookAt(actionText.transform.position + rotation * Vector3.forward, rotation * Vector3.up);
                 _canvas.transform.LookAt(_canvas.transform.position + rotation * Vector3.forward,
                     rotation * Vector3.up);
             }
@@ -108,16 +105,12 @@ namespace LH.GOAP {
                 float distanceToTarget = Vector3.Distance(_destination, this.transform.position);
 
                 string go = CurrentAction.destinationGO != null ? CurrentAction.destinationGO.name : "???";
-                actionTextBuild = CurrentAction.actionName +
-                                  $" IN PROGRESS [{go}]";
 
                 // Check the agent has a goal and has reached that goal
                 if (distanceToTarget < TARGET_DISTANCE) {
                     CurrentAction.navMeshAgent.isStopped = true;
 
                     started = false;
-
-                    actionTextBuild = CurrentAction.actionName + " PERFORM";
 
                     CurrentAction.Perform();
 
@@ -142,13 +135,10 @@ namespace LH.GOAP {
                     CurrentAction.navMeshAgent.isStopped = false;
                 }
 
-                actionText.text = actionTextBuild;
-
                 return;
             }
 
             if (CurrentAction != null && !CurrentAction.IsRunning) {
-                actionText.text = CurrentAction.actionName + " NOT RUNNING";
                 _planner = null;
             }
 
@@ -188,8 +178,6 @@ namespace LH.GOAP {
                 // Remove the top action of the queue and put it in currentAction
                 CurrentAction = _actionQueue.Dequeue();
 
-                actionTextBuild = CurrentAction.actionName;
-
                 if (started) {
                     return;
                 }
@@ -207,8 +195,6 @@ namespace LH.GOAP {
                         CurrentAction.IsRunning = true;
                         started = true;
 
-                        actionTextBuild = CurrentAction.actionName + " STARTED";
-
                         //  Get the target's transform for the NavMeshAgent destination
                         _destination = CurrentAction.destinationGO.transform.position;
 
@@ -225,19 +211,16 @@ namespace LH.GOAP {
                         if (distanceToTarget >= TARGET_DISTANCE) {
                             // Pass Unities AI the destination for the agent
                             CurrentAction.navMeshAgent.SetDestination(_destination);
-
-                            actionTextBuild = CurrentAction.actionName + " MOVING";
                         }
                     }
+                    
+                    actionChangeEvent?.Invoke();
                 }
                 else {
                     // Force a new plan
-                    actionText.text = "";
                     _actionQueue = null;
                     started = false;
                 }
-
-                actionText.text = actionTextBuild;
             }
         }
     }
