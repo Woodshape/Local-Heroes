@@ -2,20 +2,25 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using DefaultNamespace;
+using LH.Data;
 using LH.GOAP;
 using UnityEngine;
 
 namespace LH.Actions {
     public class FightAction : GAction {
+        public string attackTrigger;
         public Animation attackAnimation;
-        private Entity entity;
+
+        public Ability ability;
+        
+        private Entity _entity;
 
         private void Start() {
-            entity = GetComponent<Entity>();
+            _entity = GetComponent<Entity>();
         }
 
         private void Update() {
-            if (!IsRunning && destinationGO != null || entity != null) {
+            if (!IsRunning && destinationGO != null || _entity != null) {
                 IsRunning = true;
             }
         }
@@ -25,21 +30,26 @@ namespace LH.Actions {
                 GetComponent<Entity>().RemoveSelfFromCombat();
             }
 
-            if (entity) {
-                entity.AttackBehaviour(attackAnimation);
+            if (_entity) {
+                _entity.AttackBehaviour(ability, attackTrigger, attackAnimation);
             }
         }
 
         public override bool PrePerform() {
-            if (destinationGO == null || entity == null) {
+            if (destinationGO == null || _entity == null) {
                 return false;
+            }
+            
+            Focus focus = _entity.GetComponent<Focus>();
+            if (focus&& ability) {
+                focus.SpendFocus(ability.GetCost());
             }
 
             Entity targetEntity = destinationGO.GetComponent<Entity>();
 
             targetEntity.Beliefs.ModifyState("isAttacked", 1);
 
-            duration = entity.attackSpeed;
+            duration = _entity.attackSpeed;
             Debug.Log("Attack Duration: " + duration);
 
             agentInventory.AddItem(destinationGO);
@@ -54,6 +64,15 @@ namespace LH.Actions {
                 agentInventory.RemoveItem(destinationGO);
 
                 destinationGO.GetComponent<Entity>().Beliefs.RemoveState("isAttacked");
+            }
+
+            return true;
+        }
+
+        public override bool IsAchievable() {
+            Focus focus = gameObject.GetComponent<Focus>();
+            if (focus && ability) {
+                return focus.GetCurrentFocus() >= ability.GetCost();
             }
 
             return true;

@@ -3,7 +3,6 @@
         Health,
         Focus,
         Stamina,
-        Experience,
         Damage
     }
 }

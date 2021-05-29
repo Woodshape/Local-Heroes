@@ -3926,7 +3926,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _destTarget: {fileID: 0}
   _canvas: {fileID: 3055101044347491347}
-  actionText: {fileID: 2916973673831354655}
   entityName: 
   type: 1
   difficulty: 0
@@ -4058,4 +4057,6 @@ MonoBehaviour:
   navMeshAgent: {fileID: 0}
   IsRunning: 0
   IsInterruptable: 0
+  attackTrigger: Attack
   attackAnimation: {fileID: 0}
+  ability: {fileID: 11400000, guid: 0cff50de2bdcce84593353bd02273a2e, type: 2}

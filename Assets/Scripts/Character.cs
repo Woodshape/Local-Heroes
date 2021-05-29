@@ -78,24 +78,26 @@ public class Character : Entity, IHumanoid, IStatModifier {
     }
 
     public IEnumerable<float> GetModifier(Stat stat) {
-        Debug.Log("Getting modifiers for stat: " + stat);
+        Debug.Log("Getting character modifiers for stat: " + stat);
         
         float mod = 0f;
-        foreach (Item item in inventory.GetEquippedItems()) {
-            float itemMod = item.GetModifier(stat);
-            if (itemMod != 0) {
-                Debug.Log($"Adding mod on item {item}: {itemMod}");
-                mod += itemMod;
+        if (inventory) {
+            foreach (Item item in inventory.GetEquippedItems()) {
+                float itemMod = item.GetModifier(stat);
+                if (itemMod != 0) {
+                    Debug.Log($"Adding mod on item {item}: {itemMod}");
+                    mod += itemMod;
+                }
             }
         }
         
         Debug.Log($"Adding {type} to {stat} modifier: {mod}!");
-        
+
         yield return mod;
     }
 
     public IEnumerable<float> GetMultiplier(Stat stat) {
-        Debug.Log("Getting multipliers for stat: " + stat);
+        Debug.Log("Getting character multipliers for stat: " + stat);
         
         float multiplier = 0f;
         
@@ -103,14 +105,16 @@ public class Character : Entity, IHumanoid, IStatModifier {
         Debug.Log($"Adding {type} difficulty {difficulty} to {stat} multiplier: {difficultyModifier}!");
         multiplier += difficultyModifier;
 
-        foreach (Item item in inventory.GetEquippedItems()) {
-            float itemMult = item.GetMultiplier(stat);
-            if (itemMult != 0) {
-                Debug.Log($"Adding mult on item {item}: {itemMult}");
-                multiplier += itemMult;
+        if (inventory) {
+            foreach (Item item in inventory.GetEquippedItems()) {
+                float itemMult = item.GetMultiplier(stat);
+                if (itemMult != 0) {
+                    Debug.Log($"Adding mult on item {item}: {itemMult}");
+                    multiplier += itemMult;
+                }
             }
         }
-        
+
         Debug.Log($"Adding {type} to {stat} multiplier: {multiplier}!");
         
         yield return multiplier;

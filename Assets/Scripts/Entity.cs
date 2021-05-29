@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using DefaultNamespace;
 using LH.Actions;
+using LH.Data;
 using LH.GOAP;
 using LH.Stats;
 using UnityEngine;
@@ -9,8 +10,6 @@ using Random = UnityEngine.Random;
 
 [RequireComponent(typeof(Health))]
 public abstract class Entity : GAgent {
-    private static readonly int Attack = Animator.StringToHash("Attack");
-
     [Header("Basic")]
     public string entityName;
     public Resource type;
@@ -127,15 +126,19 @@ public abstract class Entity : GAgent {
         Beliefs.RemoveState("isAttacked");
     }
 
-    public void AttackBehaviour(Animation attackAnimation) {
+    public void AttackBehaviour(Ability ability, string animationTrigger, Animation attackAnimation) {
         if (target == null) {
             return;
         }
         
+        int trigger = Animator.StringToHash(animationTrigger);
+        
         if (!target.IsDead()) {
             if (timeSinceLastAttack > attackSpeed) {
-                animator.SetTrigger(Attack);
+                animator.SetTrigger(trigger);
                 timeSinceLastAttack = 0;
+                
+                AttackTarget(ability);
             }
         }
     }
@@ -168,6 +171,17 @@ public abstract class Entity : GAgent {
         if (this.target != null) {
             this.target.deathEvent -= onTargetDeath;
         }
+    }
+    
+    private void AttackTarget(Ability ability) {
+        if (target == null) {
+            Debug.LogWarning("No target to attack with " + ability);
+            return;
+        }
+
+        float damage = Stats.GetStat(LH.Stats.Stat.Damage) + ability.GetStrength();
+        
+        target.TakeDamage(this.gameObject, damage);
     }
 
     public abstract void OnSpawn();

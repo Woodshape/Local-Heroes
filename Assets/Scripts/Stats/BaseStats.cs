@@ -47,7 +47,7 @@ namespace LH.Stats {
             // Debug.Log("Base: " + baseValue);
             // Debug.Log("Mod: " + modifiers);
             // Debug.Log("Mult: " + multipliers);
-            // Debug.Log("VALUE: " + (baseValue + modifiers) * multipliers);
+            Debug.Log("VALUE: " + (baseValue + modifiers) * (1 + multipliers));
             
             //
             //  Add modifiers to base value FIRST before multiplication

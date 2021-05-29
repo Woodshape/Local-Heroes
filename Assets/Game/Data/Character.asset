@@ -27,7 +27,19 @@ MonoBehaviour:
       - 500
       - 600
       - 700
-    - stat: 4
+    - stat: 1
+      valueForLevels:
+      - 100
+      - 100
+      - 100
+      - 100
+      - 100
+      - 120
+      - 120
+      - 120
+      - 120
+      - 120
+    - stat: 3
       valueForLevels:
       - 10
       - 15

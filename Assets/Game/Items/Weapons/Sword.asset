@@ -13,10 +13,8 @@ MonoBehaviour:
   m_Name: Sword
   m_EditorClassIdentifier: 
   modifiers:
-  - stat: 4
+  - stat: 3
     value: 5
-  multipliers:
-  - stat: 4
-    value: 0.1
+  multipliers: []
   type: 0
   animatorOverride: {fileID: 22100000, guid: 603d4207b79278541b07d0e61483810d, type: 2}

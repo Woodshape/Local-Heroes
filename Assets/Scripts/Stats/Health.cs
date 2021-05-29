@@ -16,7 +16,6 @@ namespace LH.Stats {
 
         private bool isDead = false;
         private float healthTick;
-        private float updateTick;
         
         public event Action<Health> deathEvent;
 
@@ -101,11 +100,9 @@ namespace LH.Stats {
             else {
                 GetComponent<Entity>().Beliefs.ModifyState("isHurt", -1);
             }
-
-            if (percent < 1.0f) {
-                UpdateHealthDisplay(percent);
-                healthChangedEvent?.Invoke();
-            }
+            
+            UpdateHealthDisplay(percent);
+            healthChangedEvent?.Invoke();
         }
 
         private IEnumerator Die() {
